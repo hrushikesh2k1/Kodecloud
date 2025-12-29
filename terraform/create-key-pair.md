@@ -10,3 +10,22 @@ The private key file should be saved under /home/bob/nautilus-kp.pem.
 The Terraform working directory is /home/bob/terraform. Create the main.tf file (do not create a different .tf file) to accomplish this task.
 
 
+Approach:
+```
+resource "tls_private_key" "nautilus-kp" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+
+resource "aws_key_pair" "nautilus-kp" {
+  key_name   = "nautilus-kp"
+  public_key = tls_private_key.nautilus-kp.public_key_openssh
+}
+
+resource "local_file" "private_key" {
+  content         = tls_private_key.nautilus-kp.private_key_pem
+  filename        = "/home/bob/nautilus-kp.pem"
+  file_permission = "0400"
+}
+```
+
