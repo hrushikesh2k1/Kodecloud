@@ -24,21 +24,18 @@ Approach:
    ssh azureuser@ip
    sudo su
    ```
-3. after entering the password, create a .ssh folder in root
+3. check whether the pwd is root otherwise go to root directory
    ```
-   mkdir .ssh
+   pwd
    ```
-4. create a file called authorized_keys and copy the public key
+4. Go to authorized_keys file and delete the content inside and paste the public key of azure client host
    ```
-   cd .ssh
-   vi authorized_keys
+   vim .ssh/authorized_keys
    ```
-5. Set the permissions of the .ssh folder
+6. Check whether you are able to login as root user from azure client host
    ```
-   chmod 600 /.ssh/authorized_keys
-   chown -R root:root /.ssh/
+   ssh root@ip
    ```
-6. Now, you can able to switch to root without password from azure client.
    
 
 
