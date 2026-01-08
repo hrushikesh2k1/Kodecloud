@@ -17,25 +17,28 @@ After adding the public key, make sure that you are able to SSH into the devops-
 Approach:
 1. Copy the public key of azure client host.
    ```
-   vi /root/.ssh/id_rsa.pub
+   cat /root/.ssh/id_rsa.pub
    ```
-2. ssh into virtual machine devops-vm
+2. ssh into vm and switch to root user
    ```
-   ssh -i "private_key_path" azureuser@ip_address
-   ```
-3. switch to root and go to authorized keys
-   ```
+   ssh azureuser@ip
    sudo su
-   vi /home/azureuser/.ssh/authorized_keys
    ```
-4. copy the public key
-5. Change the permissions of public key of azure client host
+3. after entering the password, create a .ssh folder in root
    ```
-   chmod 400 /root/.ssh/id_rsa.pub
+   mkdir .ssh
    ```
-6. ssh into vm from azure client
+4. create a file called authorized_keys and copy the public key
    ```
-   ssh -i "id_rsa.pub" azureuser@ip_address
+   cd .ssh
+   vi authorized_keys
    ```
+5. Set the permissions of the .ssh folder
+   ```
+   chmod 600 /.ssh/authorized_keys
+   chown -R root:root /.ssh/
+   ```
+6. Now, you can able to switch to root without password from azure client.
+   
 
 
